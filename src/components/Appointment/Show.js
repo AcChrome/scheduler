@@ -1,14 +1,14 @@
 import React from "react";
 
 export default function Show(props) {
-  // console.log('showprops:', props);
+  
   // const edit = () => {
   //   props.onEdit();
   // }
 
-  // const remove = () => {
-  //   props.onDelete();
-  // }
+  const cancel = () => {
+    props.onCancel();
+  }
 
   return (
     <main className="appointment__card appointment__card--show">
@@ -26,7 +26,7 @@ export default function Show(props) {
         src="images/edit.png"
         alt="Edit"
       />
-      <img onClick={props.onDelete}
+      <img onClick={cancel}
         className="appointment__actions-button"
         src="images/trash.png"
         alt="Delete"

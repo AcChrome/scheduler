@@ -83,12 +83,6 @@ export default function Application(props) {
     })
   }
 
-  // useEffect(() => {
-  //   axios.get("/api/days").then((res) => {
-  //     console.log(res.data);
-  //     setDays(res.data);
-  //   });
-  // }, []);
 
   useEffect(() => {
     Promise.all([
