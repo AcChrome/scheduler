@@ -1,38 +1,29 @@
 import { useState } from "react";
 
-export function useVisualMode(initial) {
+export default function useVisualMode(initial) {
   // const [mode, setMode] = useState(initial);
   const [history, setHistory] = useState([initial]);
-  
-  
+
   const transition = function (newMode, replace = false) {
     setHistory((prev) => {
+      const newHistory = [...prev];
       if (replace) {
-        // const newHistory = [...prev];
-        // newHistory.pop();
-        // newHistory.push(newMode);
-        // return newHistory;
-        prev.pop();
-        return [...prev, newMode];
-      } else {
-        return [...prev, newMode];
-        // const newHistory= [...prev];
-        // newHistory.push(newMode)
-        // return newHistory;
+        newHistory.pop();
       }
+      newHistory.push(newMode);
+      return newHistory;
     });
   };
 
   const back = function () {
+    if (history.length === 1) {
+      return;
+    }
     setHistory((prev) => {
-      if (history.length === 1) {
-       return prev;
-      } else {
       return prev.slice(0, prev.length - 1);
       // const newHistory = [...prev];
       // newHistory.pop();
       // return newHistory;
-      }
     });
   };
 
@@ -44,33 +35,31 @@ export function useVisualMode(initial) {
 // export default function useVisualMode(initial) {
 //   const [mode, setMode] = useState(initial);
 //   const [history, setHistory] = useState([initial]);
-  
-  
-//   const transition = function (newMode, replace = false) {
-//     setMode(newMode);
-//     if (replace) {
-//       setHistory((prev) => [...prev.slice(0,prev.length - 1), newMode])
 
+//   const transition = function (newMode, replace = false) {
+//     if (replace) {
+//       const newMode = [...history];
+//       newModes.pop();
+//       newModes.push(newMode);
+//       setHistory(newMode);
+//       setMode(newMode);
 //     } else {
-//       setHistory((prev) => [...prev, newMode]);
-//       // const newHistory= [...prev];
-//       // newHistory.push(newMode)
-//       // return newHistory;
-//       }
-//     };
-    
+//       const newModes = [...history];
+//       newModes.push(newMode);
+//       setHistory(newModes);
+//       setMode(newMode);
+//     }
+//   }
 //   const back = function () {
-//     // setHistory((prev) => {
-//       if (history.length > 1) {
-//         setHistory((prev) => [...prev.slice(0, prev.length - 1)])
-//         // const newHistory = [...prev];
-//         // newHistory.pop();
-//         // return newHistory;
-//       }
-//       // });
-//       setMode(history[history.length - 1]);
-//     };
+//     if (history.length === 1) {
+//       setMode(history[0]);
+//     } else {
+//       const newModes = [...history];
+//       newModes.pop();
+//       setHistory(newModes);
+//       setMode(newModes[newModes.length - 1]);
+//     }
+//   }
 
 //   return { mode, transition, back };
-// }
-
+// };
