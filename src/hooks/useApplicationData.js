@@ -21,10 +21,13 @@ export function useApplicationData(props) {
       [id]: appointment,
     };
 
-    return axios.put(`/api/appointments/${id}`, { interview }).then(() => {
+    const days = spotsRemaining("create");
+    return axios.put(`/api/appointments/${id}`, { interview })
+    .then(() => {
       setState({
         ...state,
         appointments,
+        days
       });
     });
   }
@@ -39,10 +42,13 @@ export function useApplicationData(props) {
       [id]: appointment,
     };
 
+
+    const days = spotsRemaining()
     return axios.delete(`/api/appointments/${id}`).then(() => {
       setState({
         ...state,
         appointments,
+        days
       });
     });
   }
@@ -52,7 +58,6 @@ export function useApplicationData(props) {
       axios.get("/api/days"),
       axios.get("/api/appointments"),
       axios.get("/api/interviewers"),
-      // axios.get("/api/debug/reset")
     ]).then((all) => {
       setState((prev) => ({
         ...prev,
@@ -63,5 +68,18 @@ export function useApplicationData(props) {
     });
   }, []);
 
-  return { bookInterview, cancelInterview, state, setDay };
+  function spotsRemaining(requestType) {
+    const dayIndex = state.days.findIndex(day => {
+      return day.name === state.day;
+    })
+    const days = state.days;
+    if (requestType === "create") {
+      days[dayIndex].spots -= 1
+    } else {
+      days[dayIndex].spots += 1
+    }
+    return days;
+  }
+
+  return { bookInterview, cancelInterview, state, setDay, spotsRemaining };
 }
