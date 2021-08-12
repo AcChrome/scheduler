@@ -11,35 +11,38 @@ export default function Form(props) {
   const reset = () => {
     setStudent("");
     setInterviewer(null);
-  }
+  };
 
   const cancel = () => {
     reset();
     onCancel();
-  }
+  };
 
   const validate = () => {
     if (student === "") {
       setError("Student name cannot be blank");
       return;
     }
-
+    if (!interviewer) {
+      setError("Please select a interviewer");
+      return;
+    }
     setError("");
     onSave(student, interviewer);
-  }
+  };
 
   return (
-    <main className="appointment__card appointment__card--create" >
+    <main className="appointment__card appointment__card--create">
       <section className="appointment__card-left">
         <form autoComplete="off">
-          <input 
+          <input
             className="appointment__create-input text--semi-bold"
             name={name}
             value={student}
             type="text"
             placeholder="Enter Student Name"
             onChange={(event) => setStudent(event.target.value)}
-            onSubmit={event => event.preventDefault()}
+            onSubmit={(event) => event.preventDefault()}
             data-testid="student-name-input"
           />
         </form>
