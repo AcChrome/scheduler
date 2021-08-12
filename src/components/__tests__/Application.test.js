@@ -188,6 +188,8 @@ describe("Application", () => {
   
       // 5. Click on "Confirm" button on the delete element.
       fireEvent.click(getByText(appointment, "Confirm"))
+      
+      // 6. Wait until the element with the text "Error deleting" is displayed.
       await waitForElement(() => getByText(appointment, "Error deleting"))
   
       // 7. Check to see if error message shows "Error deleting".

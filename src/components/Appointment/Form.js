@@ -61,4 +61,3 @@ export default function Form(props) {
     </main>
   );
 }
-//()=> props.onSave(name, interviewer)
